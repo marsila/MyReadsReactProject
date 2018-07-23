@@ -6,12 +6,12 @@ class Book extends Component {
     shelf :"none"
   }
 
-  updateShelf = (event)=>{
+  updateShelf = (event) => {
      this.setState({shelf :event.target.value})
      this.props.onUpdateShelf(this.props.book, event.target.value)
   }
 
-  render(){    
+  render(){
     const {book} = this.props
     return(
       <div className="book">

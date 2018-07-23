@@ -4,11 +4,10 @@ import Book from './Book'
 
 class BooksList extends Component {
 
-  changeBookShelf = (book, shelf) =>
-  {
-    console.log(`book.id= ${book.id}, shelf= ${shelf}`);
+  changeBookShelf = (book, shelf) => {
     this.props.onUpdateBookShelf(book, shelf)
   }
+  
   render() {
     const {books} = this.props
 
@@ -42,7 +41,7 @@ class BooksList extends Component {
               <ol className="books-grid">
                 {
                   books.filter((book) => (book.shelf === 'wantToRead')).map((book) => (
-                    <li key={book.title}>
+                    <li key={book.id}>
                       <Book book={book}
                         onUpdateShelf ={(book, shelf) => {
                           this.changeBookShelf(book, shelf)
@@ -59,7 +58,7 @@ class BooksList extends Component {
               <ol className="books-grid">
                 {
                   books.filter((book) => (book.shelf === 'read')).map((book) => (
-                    <li key={book.title}>
+                    <li key={book.id}>
                       <Book book={book}
                         onUpdateShelf ={(book, shelf) => {
                           this.changeBookShelf(book, shelf)
