@@ -42,26 +42,11 @@ class BooksApp extends Component {
 
   updateBookShelf(selectedBook,shelf){
     let updatedBooks
-    const index = this.state.books.findIndex(b => b.id === selectedBook.id)
-    BooksAPI.update(selectedBook, shelf).then(res => {
-      if(res){
-        if(index > 0){
-          // the book is already on the shelf and we want to change the shelf
-          updatedBooks = this.state.books.map(book => {
-            if (book.id === selectedBook.id) {
-              return {...selectedBook, shelf}
-            } else {
-              return book
-            }
-          })
-        } else {
-          // add a new book to the shelf
-          updatedBooks = [...this.state.books, {...selectedBook, shelf}]
-          console.log(`do nothing yet`);
-        }
-        this.setState({books: updatedBooks})
-      }
-    })
+    selectedBook.shelf = shelf
+    BooksAPI.update(selectedBook, shelf).then(() => {
+      updatedBooks = [...this.state.books.filter(b => b.id !== selectedBook.id), {...selectedBook}]
+      this.setState({books: updatedBooks})
+    })    
   }
   render() {
     return (<div className="app">

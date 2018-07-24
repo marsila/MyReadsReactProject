@@ -1,81 +1,47 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import Book from './Book'
+import Shelf from './Shelf'
 
-class BooksList extends Component {
+function BooksList(props) {
 
-  changeBookShelf = (book, shelf) => {
-    this.props.onUpdateBookShelf(book, shelf)
+  const changeBookShelf = (book, shelf) => {
+    props.onUpdateBookShelf(book, shelf)
   }
-  
-  render() {
-    const {books} = this.props
 
     return (<div className="list-books">
-      <div className="list-books-title">
-        <h1>MyReads</h1>
-      </div>
-      <div className="list-books-content">
-        <div>
-          <div className="bookshelf">
-            <h2 className="bookshelf-title">Currently Reading</h2>
-            <div className="bookshelf-books">
-              <ol className="books-grid">
-                {
-                  books.filter((book) => (book.shelf === 'currentlyReading'))
-                    .map((book) => (
-                      <li key={book.id}>
-                       <Book book={book}
-                         onUpdateShelf ={(book, shelf) => {
-                           this.changeBookShelf(book, shelf)
-                         }}
-                       />
-                     </li>))
-                }
-              </ol>
+            <div className="list-books-title">
+              <h1>MyReads</h1>
+            </div>
+            <div className="list-books-content">
+              <div>
+                <Shelf books={props.books}
+                  shelfName ='currentlyReading'
+                  shelfTitle='Currently Reading'
+                  onChangeBookShelf = {(book, shelf) => {
+                    changeBookShelf(book, shelf)
+                  }}
+                />
+                <Shelf books={props.books}
+                  shelfName ='wantToRead'
+                  shelfTitle= 'Want to Read'
+                  onChangeBookShelf = {(book, shelf) => {
+                    changeBookShelf(book, shelf)
+                  }}
+                />
+                <Shelf books={props.books}
+                  shelfName ='read'
+                  shelfTitle= 'Read'
+                  onChangeBookShelf = {(book, shelf) => {
+                    changeBookShelf(book, shelf)
+                  }}
+                />
             </div>
           </div>
-          <div className="bookshelf">
-            <h2 className="bookshelf-title">Want to Read</h2>
-            <div className="bookshelf-books">
-              <ol className="books-grid">
-                {
-                  books.filter((book) => (book.shelf === 'wantToRead')).map((book) => (
-                    <li key={book.id}>
-                      <Book book={book}
-                        onUpdateShelf ={(book, shelf) => {
-                          this.changeBookShelf(book, shelf)
-                        }}
-                      />
-                   </li>))
-                }
-              </ol>
-            </div>
+          <div className="open-search">
+            <Link to="/search">Add a book</Link>
           </div>
-          <div className="bookshelf">
-            <h2 className="bookshelf-title">Read</h2>
-            <div className="bookshelf-books">
-              <ol className="books-grid">
-                {
-                  books.filter((book) => (book.shelf === 'read')).map((book) => (
-                    <li key={book.id}>
-                      <Book book={book}
-                        onUpdateShelf ={(book, shelf) => {
-                          this.changeBookShelf(book, shelf)
-                        }}
-                      />
-                    </li>))
-                }
-              </ol>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="open-search">
-        <Link to="/search">Add a book</Link>
-      </div>
-    </div>)
-  }
+        </div>)
 }
 
 export default BooksList;

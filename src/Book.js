@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import {Link} from 'react-router-dom'
 
 class Book extends Component {
   state = {
@@ -13,14 +12,15 @@ class Book extends Component {
 
   render(){
     const {book} = this.props
+    const style = {
+        width: 128,
+        height: 193,
+        backgroundImage: book.imageLinks ? `url(${book.imageLinks.thumbnail})` : ''
+      }
     return(
       <div className="book">
         <div className="book-top">
-          <div className="book-cover" style={{
-              width: 128,
-              height: 193,
-              backgroundImage: book.imageLinks ? `url(${book.imageLinks.thumbnail})` : ''
-            }}></div>
+          <div className="book-cover" style={style}></div>
           <div className="book-shelf-changer">
 
             <select onChange={this.updateShelf} value={book.shelf ? book.shelf : this.state.shelf}>
@@ -36,9 +36,7 @@ class Book extends Component {
         <div className="book-authors">{book.authors}</div>
       </div>
     )
-
   }
-
 }
 
 export default Book;
